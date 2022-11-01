@@ -15,9 +15,12 @@ let questionText = "";
 fetch("./texts.json")
   .then((res) => res.json())
   .then((data) => {
+    console.log(data)
     questionText = data[Math.floor(Math.random() * data.length)];
     question.innerHTML = questionText;
+    console.log(questionText)
   });
+
 
 // checks the user typed character and displays accordingly
 const typeController = (e) => {
@@ -107,7 +110,7 @@ const start = () => {
   countdownOverlay.style.display = "flex";
 
   const startCountdown = setInterval(() => {
-    countdownOverlay.innerHTML = '<h1>${count}</h1>';
+    countdownOverlay.innerHTML = `<h1>${count}</h1>`;
 
     // finished timer
     if (count == 0) {
@@ -118,6 +121,8 @@ const start = () => {
 
       clearInterval(startCountdown);
       startTime = new Date().getTime();
+
+       countdownOverlay.style.display = "none";
     }
     count--;
   }, 1000);
@@ -132,7 +137,8 @@ displayHistory();
 // Show typing time spent
 setInterval(() => {
   const currentTime = new Date().getTime();
-  const timeSpent = (currentTime - startTime) / 1000;
+  
+  const timeSpent = parseInt((currentTime - startTime) / 1000);
 
 
   document.getElementById("show-time").innerHTML = `${startTime ? timeSpent : 0} seconds`;
